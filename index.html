@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDos Javascript</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" type="text/css" href="/main.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:600;800" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="intro col-12">
+                <h1>Work To-Dos</h1>
+                <div class="bordered">
+                    <ul class="nav justify-content-center bg-dark">
+                        <li class="nav-item">
+                            <a class="nav-link active text-light" href="/index.html">Anasayfa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/about.html">Hakkımda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/contact.html">İletişim</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- div.row>div.helpText.col-12>p#first+p.second+p.third -->
+    <div class="row">
+        <div class="helpText col-12">
+            <p id="first">Listeye bir todo eklemek için bir metin giriniz.</p>
+            <p class="second">Todo'ları tamamlandı olarak işaretlemek için üzerine tıklayın.</p>
+            <p class="third">"X" butonuna tıklarsanız todo listenizden temizlenir.</p>
+        </div>
+    </div>
+
+    <!-- div.row>div.col-12>input#userInput+button#enter -->
+    <div class="row">
+        <div class="col-12">
+            <input type="text" id="userInput" placeholder="Yeni ToDo...">
+            <button id="enter">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- div.row>div.listItems.col-12>ul.col-12.offset-0.col-sm-8.offset-sm-2 -->
+    <div class="row">
+        <div class="listItems col-12">
+            <ul class="my-4">
+
+            </ul>
+        </div>
+    </div>
+
+    <script src="/jquery-3.5.1.min.js"></script>
+    <script src="/main.js"></script>
+</body>
+
+</html>
