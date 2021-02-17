@@ -38,6 +38,7 @@ p {
   -ms-transition: all 0.75s ease;
   -o-transition: all 0.75s ease;
   font-weight: normal;
+  cursor: pointer;
 }
 
 #enter:hover {
@@ -79,4 +80,5 @@ input {
 .pos {
   position: absolute;
   margin-left: 50%;
+  cursor: pointer;
 }

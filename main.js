@@ -49,38 +49,40 @@ const getTodos = () => {
 getTodos()
 
 $(enterButton).click(function () {
-    var li = $("<li></li>").append(input[0].value)
-    $(li).css({
-        "background-color": "black",
-        "color": "white"
-    })
-    var button = $("<button></button>")
-    $(button).text("X")
-    $(button).attr("class", "pos")
-    $(button).click(function () {
-        $(this).parent("li").remove()
-        todos.pop()
+    if (input[0].value.length > 0) {
+        var li = $("<li></li>").append(input[0].value)
+        $(li).css({
+            "background-color": "black",
+            "color": "white"
+        })
+        var button = $("<button></button>")
+        $(button).text("X")
+        $(button).attr("class", "pos")
+        $(button).click(function () {
+            $(this).parent("li").remove()
+            todos.pop()
+            setTodos(todos)
+        })
+        $(li).append(button)
+        $(ul).append(li)
+        input[0].value = ""
+
+        $(li).on("click", function () {
+            if ($(this).attr("class") === "done") {
+                $(this).css({
+                    "background-color": "black",
+                    "color": "white"
+                })
+            } else {
+                $(this).attr("style", "")
+            }
+            $(this).toggleClass("done")
+        })
+        var text = $(li).text();
+
+        todos.push(text.slice(0, text.length - 1))
         setTodos(todos)
-    })
-    $(li).append(button)
-    $(ul).append(li)
-    input[0].value = ""
-
-    $(li).on("click", function () {
-        if ($(this).attr("class") === "done") {
-            $(this).css({
-                "background-color": "black",
-                "color": "white"
-            })
-        } else {
-            $(this).attr("style", "")
-        }
-        $(this).toggleClass("done")
-    })
-    var text = $(li).text();
-
-    todos.push(text.slice(0, text.length - 1))
-    setTodos(todos)
+    }
 })
 
 $(input).keypress(function (e) {
