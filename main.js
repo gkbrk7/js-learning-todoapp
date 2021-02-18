@@ -6,11 +6,10 @@ var todos = []
 
 const inputLength = () => $(input).val().length;
 const listLength = () => $(item).length;
-const readTodos = () => JSON.parse(window.localStorage.getItem("todos"))
+const readTodos = () => JSON.parse(window.localStorage.getItem("todos")) || []
 
 const setStatus = (item) => {
     var text = $(item).text();
-    text = text.substr(0, text.length - 1)
     var elements = readTodos()
     elements.forEach((value) => {
         if (value.todo === text) {
@@ -24,9 +23,8 @@ const setTodos = (todos) => {
     window.localStorage.setItem("todos", JSON.stringify(todos))
 }
 
-
-const getTodos = (() => {
-    todos = readTodos() || []
+const getTodos = () => {
+    todos = readTodos()
     todos.forEach(item => {
         var li = $("<li></li>").append(item.todo)
         $(li).css({
@@ -34,14 +32,17 @@ const getTodos = (() => {
             "color": "white"
         })
 
+        var button = $("<i></i>")
+        //$(button).text("X")
+        $(button).attr("class", "pos")
+
         if (item.status === "done") {
             $(li).attr("class", item.status)
             $(li).attr("style", "")
+            $(button).addClass("fas fa-check")
+        } else {
+            $(button).addClass("fas fa-trash")
         }
-
-        var button = $("<button></button>")
-        $(button).text("X")
-        $(button).attr("class", "pos")
 
         $(li).append(button)
         $(ul).append(li)
@@ -52,74 +53,49 @@ const getTodos = (() => {
                     "background-color": "black",
                     "color": "white"
                 })
+                $(button).removeClass("fas fa-check")
+                $(button).addClass("fas fa-trash")
             } else {
                 $(this).attr("style", "")
+                $(button).removeClass("fas fa-trash")
+                $(button).addClass("fas fa-check")
             }
             $(this).toggleClass("done")
             setStatus(this)
         })
 
         $(button).click(function () {
-            var text = $(this).parent("li").text();
-            index = todos.indexOf(text.substr(0, text.length - 1))
-            $(this).parent("li").remove()
-            todos.splice(index, 1)
+            var text = $(this).parent("li").text()
+            text = text.substr(0, text.length - 1)
+            todos = readTodos().filter(value => value.todo !== text)
             setTodos(todos)
+            $(this).parent("li").remove()
         })
     })
     setTodos(todos)
-})()
+}
+getTodos()
 
 $(enterButton).click(function () {
     if (input[0].value.length > 0) {
-        var li = $("<li></li>").append(input[0].value)
-        $(li).css({
-            "background-color": "black",
-            "color": "white"
-        })
-
-        var button = $("<button></button>")
-        $(button).text("X")
-        $(button).attr("class", "pos")
-
-        $(li).append(button)
-        $(ul).append(li)
-
-        $(li).on("click", function () {
-            if ($(this).attr("class") === "done") {
-                $(this).css({
-                    "background-color": "black",
-                    "color": "white"
-                })
-            } else {
-                $(this).attr("style", "")
-            }
-            $(this).toggleClass("done")
-            setStatus(this)
-        })
-        var object = {}
-        var text = $(li).text();
-        text = text.substr(0, text.length - 1)
-        object.todo = text;
-        object.status = $(li).attr("class") || "";
+        var text = input[0].value;
+        var object = {
+            todo: text,
+            status: ""
+        }
         todos.push(object)
-
-        $(button).click(function () {
-            var text = $(this).parent("li").text();
-            index = todos.indexOf(text.substr(0, text.length - 1))
-            $(this).parent("li").remove()
-            todos.splice(index, 1)
-            setTodos(todos)
-        })
-
         setTodos(todos)
+        $(ul).empty()
+        getTodos()
         input[0].value = ""
     }
 })
 
-
 $(input).keypress(function (e) {
     if (inputLength() > 0 && e.which === 13) {
         $(enterButton).trigger("click");
+        $(ul).empty()
+        getTodos()
     }
 })
+
