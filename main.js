@@ -66,7 +66,6 @@ const getTodos = () => {
 
         $(button).click(function () {
             var text = $(this).parent("li").text()
-            text = text.substr(0, text.length - 1)
             todos = readTodos().filter(value => value.todo !== text)
             setTodos(todos)
             $(this).parent("li").remove()
