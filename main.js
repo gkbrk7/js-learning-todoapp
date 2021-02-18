@@ -11,15 +11,25 @@ const setTodos = (todos) => {
     window.localStorage.setItem("todos", JSON.stringify(todos))
 }
 
-const getTodos = () => {
-    var todos = JSON.parse(window.localStorage.getItem("todos")) || []
-    console.log(todos)
+const getTodos = (() => {
+    todos = JSON.parse(window.localStorage.getItem("todos")) || []
     todos.forEach(item => {
         var li = $("<li></li>").append(item)
         $(li).css({
             "background-color": "black",
             "color": "white"
         })
+
+        // $(li).attr("class", "done")
+        // $(li).attr("style", "")
+
+        var button = $("<button></button>")
+        $(button).text("X")
+        $(button).attr("class", "pos")
+
+        $(li).append(button)
+        $(ul).append(li)
+
         $(li).on("click", function () {
             if ($(this).attr("class") === "done") {
                 $(this).css({
@@ -31,22 +41,17 @@ const getTodos = () => {
             }
             $(this).toggleClass("done")
         })
-        var button = $("<button></button>")
-        $(button).text("X")
-        $(button).attr("class", "pos")
+
         $(button).click(function () {
+            var text = $(this).parent("li").text();
+            index = todos.indexOf(text.substr(0, text.length - 1))
             $(this).parent("li").remove()
-            var index = todos.indexOf($(this).parent("li").text())
             todos.splice(index, 1)
             setTodos(todos)
         })
-        $(li).append(button)
-        $(ul).append(li)
     })
-    //return JSON.parse(todos)
-}
-
-getTodos()
+    setTodos(todos)
+})()
 
 $(enterButton).click(function () {
     if (input[0].value.length > 0) {
@@ -55,17 +60,13 @@ $(enterButton).click(function () {
             "background-color": "black",
             "color": "white"
         })
+
         var button = $("<button></button>")
         $(button).text("X")
         $(button).attr("class", "pos")
-        $(button).click(function () {
-            $(this).parent("li").remove()
-            todos.pop()
-            setTodos(todos)
-        })
+
         $(li).append(button)
         $(ul).append(li)
-        input[0].value = ""
 
         $(li).on("click", function () {
             if ($(this).attr("class") === "done") {
@@ -78,10 +79,21 @@ $(enterButton).click(function () {
             }
             $(this).toggleClass("done")
         })
-        var text = $(li).text();
 
-        todos.push(text.slice(0, text.length - 1))
+        var text = $(li).text();
+        text = text.substr(0, text.length - 1)
+        todos.push(text)
+
+        $(button).click(function () {
+            var text = $(this).parent("li").text();
+            index = todos.indexOf(text.substr(0, text.length - 1))
+            $(this).parent("li").remove()
+            todos.splice(index, 1)
+            setTodos(todos)
+        })
+
         setTodos(todos)
+        input[0].value = ""
     }
 })
 
